@@ -11,3 +11,7 @@ spring:
   devtools:
     restart:
       enabled: true
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
