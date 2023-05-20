@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class Student {
     private Integer id;
     private String name;
-    private Integer idCard;
+    private String idCard;
     private String password;
-    private Boolean signUp;
+    private Boolean enroll;
 }
