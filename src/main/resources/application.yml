@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://39.105.177.215:3306/english_exam?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://39.105.177.215:3306/english_exam?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: TKYrkbM7eBeyGcSr
     driver-class-name: com.mysql.cj.jdbc.Driver
