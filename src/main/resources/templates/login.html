@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link href="../static/thirdLib/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+    <script src="../static/thirdLib/axios.js"></script>
+    <script src="../static/thirdLib/vue.js"></script>
+    <script src="../static/thirdLib/element-ui/lib/index.js"></script>
+</head>
+<body>
+<!--<div id="header">-->
+<!--    <div class="header_title">-->
+<!--        <span class="title_con">学工系统</span>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div id="app">
+
+    <div>
+        <el-radio v-model="radio1" label="1" border>备选项1</el-radio>
+        <el-radio v-model="radio1" label="2" border>备选项2</el-radio>
+    </div>
+        <div class="con">
+            <div class="con_title">
+                <span class="con_title_sp">欢迎登录学工系统</span>
+            </div>
+            <div class="con_panel">
+                <div class="con_input">
+                    <span>用户名：</span><input type="text" placeholder="学号/工号"/>
+                </div>
+                <div class="con_input">
+                    <span>密&nbsp;&nbsp;&nbsp;&nbsp;码：</span><input type="text" placeholder="密码"/>
+                </div>
+
+                <input type="submit" value="登录" class="submit-btn"/>
+            </div>
+        </div>
+</div>
+
+</body>
+<!--<script src="https://unpkg.com/vue@2/dist/vue.js"></script>-->
+<!--&lt;!&ndash; import JavaScript &ndash;&gt;-->
+<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+<script src="../static/js/Var.js"></script>
+<script src="../static/js/login.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function() {
+            return {
+                radio1: '1'
+            };
+        }
+    })
+</script>
+
+</html>
+
