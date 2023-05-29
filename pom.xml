@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.se</groupId>
     <artifactId>english_exam</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>english_exam</name>
     <description>english_exam</description>
     <properties>
