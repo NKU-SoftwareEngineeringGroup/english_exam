@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+/**
+ * 判卷控制器
+ */
 @RestController
 @RequestMapping("/api/judge")
 public class JudgeController {
@@ -14,6 +17,9 @@ public class JudgeController {
     @Resource
     private JudgeService judgeService;
 
+    /**
+     * 老师获取学生作答
+     */
     @GetMapping
     public Result getStudentAnswer() {
         Answer answer = judgeService.getStudentAnswer();
@@ -24,6 +30,9 @@ public class JudgeController {
         }
     }
 
+    /**
+     * 老师对学生主观题打分
+     */
     @PostMapping
     public Result judgeStudentAnswer(@RequestBody Answer answer) {
         if (judgeService.judgeStudentAnswer(answer)) {

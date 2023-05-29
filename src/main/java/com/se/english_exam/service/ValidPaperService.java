@@ -14,12 +14,16 @@ public class ValidPaperService {
     ValidPaperMapper validPaperMapper;
 
     public Boolean setValidPaperId(Integer id) {
+        // 更新validPaper表中的id字段
+        // 注：validPaper表中只有一条记录
         LambdaUpdateWrapper<ValidPaper> wrapper = new LambdaUpdateWrapper<>();
         wrapper.set(ValidPaper::getId, id);
         return validPaperMapper.update(null, wrapper) == 1;
     }
 
     public Integer getValidPaperId() {
+        // 查询validPaper表中的id字段
+        // 注：validPaper表中只有一条记录
         ValidPaper validPaper = validPaperMapper.selectOne(null);
         assert validPaper != null;
         return validPaper.getId();

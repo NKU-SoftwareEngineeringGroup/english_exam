@@ -22,6 +22,7 @@ public class ScoreService {
 
         LambdaQueryWrapper<Answer> wrapper = new LambdaQueryWrapper<>();
 
+        // 查找已经批改的学生作答
         wrapper.eq(Answer::getPaperId, paperId)
                 .eq(Answer::getStudentId, studentId)
                 .isNotNull(Answer::getChoiceScore)
@@ -34,6 +35,7 @@ public class ScoreService {
             return null;
         }
 
+        // 抽取答案部分，返回给前端
         return new Score(
                 answer.getChoiceScore(),
                 answer.getSubjective1Score(),

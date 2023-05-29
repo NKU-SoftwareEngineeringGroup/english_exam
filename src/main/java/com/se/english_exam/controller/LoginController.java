@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 登录控制器
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -23,6 +26,9 @@ public class LoginController {
     @Resource
     LoginService loginService;
 
+    /**
+     * 学生登录
+     */
     @PostMapping("/login/student")
     public Result studentLogin(@RequestBody LoginToken token) {
         log.info("student login with idCard: " + token.getUsername() +
@@ -39,6 +45,9 @@ public class LoginController {
         }
     }
 
+    /**
+     * 老师登录
+     */
     @PostMapping("/login/teacher")
     public Result teacherLogin(@RequestBody LoginToken token) {
         Teacher teacher =
@@ -52,6 +61,9 @@ public class LoginController {
         }
     }
 
+    /**
+     * 管理员登录
+     */
     @PostMapping("/login/admin")
     public Result adminLogin(@RequestBody LoginToken token) {
         Admin admin =
@@ -65,12 +77,18 @@ public class LoginController {
         }
     }
 
+    /**
+     * 登出
+     */
     @PostMapping("/logout")
     public Result logout() {
         request.getSession().invalidate();
         return new Result(Result.STATUS_SUCCESS, "登出成功", null);
     }
 
+    /**
+     * 获取已登录用户的名称
+     */
     @GetMapping("/username")
     public Result getUserName() {
         Student student = (Student) request.getSession().getAttribute("student");

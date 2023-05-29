@@ -20,10 +20,14 @@ public class AnswerService {
             String realAnswer,
             String studentAnswer
     ) {
+        // 将标准答案和学生答案分割成数组
         String[] realAnswerSplit = realAnswer.split(";");
         String[] studentAnswerSplit = studentAnswer.split(";");
+
+        // 确保两部分答案长度相同
         assert realAnswerSplit.length == studentAnswerSplit.length;
 
+        // 计算选择题得分，每题2分
         int score = 0;
         for (int i = 0; i < realAnswerSplit.length; i++) {
             if (realAnswerSplit[i].equals(studentAnswerSplit[i])) {
@@ -43,6 +47,8 @@ public class AnswerService {
         }
 
         answer.setPaperId(paper.getId());
+
+        // 在学生提交答案时，计算选择题得分
         answer.setChoiceScore(getChoiceScore(
                 paper.getAnswer(),
                 answer.getChoiceAnswer()

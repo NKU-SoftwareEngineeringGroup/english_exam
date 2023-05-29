@@ -26,6 +26,7 @@ public class JudgeService {
 
         LambdaQueryWrapper<Answer> wrapper = new LambdaQueryWrapper<>();
 
+        // 查询当前批次考试，还未批改的学生答案
         wrapper.eq(Answer::getPaperId, paperId)
                 .isNull(Answer::getSubjective1Score)
                 .isNull(Answer::getSubjective2Score);

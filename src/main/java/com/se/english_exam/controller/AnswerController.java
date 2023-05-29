@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 作答信息控制器
+ */
 @RestController
 @RequestMapping("/api/answer")
 public class AnswerController {
@@ -22,6 +25,9 @@ public class AnswerController {
     @Resource
     private HttpServletRequest request;
 
+    /**
+     * 学生提交答案
+     */
     @PostMapping
     public Result submitAnswer(@RequestBody Answer answer) {
         Student student = (Student) request.getSession().getAttribute("student");

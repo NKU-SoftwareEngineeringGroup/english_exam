@@ -16,6 +16,8 @@ public class LoginInterceptor implements HandlerInterceptor {
     private final Map<Pair<String, String>, String> roleMap;
 
     public LoginInterceptor() {
+
+        // 创建权限控制列表
         roleMap = new HashMap<>();
         roleMap.put(new Pair<>("/api/answer", "POST"), "student");
         roleMap.put(new Pair<>("/api/enroll", "POST"), "student");
@@ -30,7 +32,11 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        // 表驱动，判断当前角色是否有权限访问该资源
         String role = roleMap.get(new Pair<>(request.getRequestURI(), request.getMethod()));
+
+        // 非受限资源（如login相关接口），直接放行
+        // 受限资源，判断当前角色是否有权限访问该资源
         if (role != null) {
             if (request.getSession().getAttribute(role) != null) {
                 return true;
@@ -39,7 +45,6 @@ public class LoginInterceptor implements HandlerInterceptor {
             }
         }
 
-        // 非受限资源（如login相关接口），直接放行
         return true;
     }
 }
