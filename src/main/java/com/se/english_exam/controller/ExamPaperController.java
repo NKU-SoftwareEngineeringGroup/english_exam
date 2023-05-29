@@ -10,6 +10,9 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * 试卷控制器
+ */
 @RestController
 @RequestMapping("/api/exam_paper")
 public class ExamPaperController {
@@ -17,6 +20,9 @@ public class ExamPaperController {
     @Resource
     private ExamPaperService service;
 
+    /**
+     * 学生获取试卷信息
+     */
     @GetMapping
     public Result getValidExamPaper() {
         ExamPaper paper = service.getValidExamPaper();
@@ -27,6 +33,9 @@ public class ExamPaperController {
         }
     }
 
+    /**
+     * 管理员上传试卷
+     */
     @PostMapping
     public Result createExamPaper(
             @RequestParam("file") MultipartFile file,

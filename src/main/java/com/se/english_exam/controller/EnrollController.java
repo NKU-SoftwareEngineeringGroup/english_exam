@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 报名信息控制器
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/enroll")
@@ -23,6 +26,9 @@ public class EnrollController {
     @Resource
     private HttpServletRequest request;
 
+    /**
+     * 学生报名
+     */
     @PostMapping
     public Result enroll() {
         Student student = (Student) request.getSession().getAttribute("student");
@@ -36,6 +42,9 @@ public class EnrollController {
         }
     }
 
+    /**
+     * 管理员清理报名信息
+     */
     @DeleteMapping
     public Result reset() {
         enrollService.reset();

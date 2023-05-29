@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 成绩查询控制器
+ */
 @RestController
 @RequestMapping("/api/score")
 public class ScoreController {
@@ -21,6 +24,9 @@ public class ScoreController {
     @Resource
     private HttpServletRequest request;
 
+    /**
+     * 学生查询成绩
+     */
     @GetMapping
     public Result getScore() {
         Student student = (Student) request.getSession().getAttribute("student");
