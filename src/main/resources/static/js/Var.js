@@ -1,4 +1,4 @@
-let basePath = 'http://39.105.177.215:9030/'
+let basePath = 'http://127.0.0.1:8080/'
 let userAPI = basePath + "/user"
 let userAPI_hasLogin = userAPI + "/hasLogin"
 let diskAPI = basePath + "/baizeDisk"

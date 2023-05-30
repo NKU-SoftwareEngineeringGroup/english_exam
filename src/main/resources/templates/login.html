@@ -10,6 +10,7 @@
     <script src="../static/thirdLib/vue.js"></script>
     <script src="../static/thirdLib/element-ui/lib/index.js"></script>
 </head>
+
 <body background="../static/images/bg.jpg" style="background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%; ">
 <!--<div id="header">-->
 <!--    <div class="header_title">-->
@@ -89,12 +90,12 @@
 </div>
 
 </body>
+
 <!--<script src="https://unpkg.com/vue@2/dist/vue.js"></script>-->
 <!--&lt;!&ndash; import JavaScript &ndash;&gt;-->
 <!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
 <script src="../static/js/Var.js"></script>
-<script src="../static/js/login.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
 <script>
     new Vue({
         el: '#app',
@@ -144,28 +145,42 @@
                             axios({
                                 method: "POST",
                                 url: basePath+"api/login/student",
-                                data: this.formLoginInform
+                                data: {
+                                    username: this.formLoginInform.username,
+                                    password: this.formLoginInform.password
+                                }
                             }).then(res => {
                                 if (res.data.status === 0) {
                                     //获取数据成功
                                     this.$message.success(res.data.msg);
-                                    this.getData();
+                                    alert('学生'+this.formLoginInform.username+'，您已成功登录');
+                                    setTimeout(() => {
+                                        window.location.href = "./student.html";
+                                    }, 1000)
                                 } else {
                                     //获取数据失败
                                     this.$message.error(res.data.msg);
                                 }
                             })
+
                         }
                         else if(this.userType==='teacher'){
                             axios({
                                 method: "POST",
                                 url: basePath+"api/login/teacher",
-                                data: this.formLoginInform
+                                withCredentials: true,
+                                data: {
+                                    username: this.formLoginInform.username,
+                                    password: this.formLoginInform.password
+                                }
                             }).then(res => {
                                 if (res.data.status === 0) {
                                     //获取数据成功
                                     this.$message.success(res.data.msg);
-                                    this.getData();
+                                    alert('教师'+this.formLoginInform.username+'，您已成功登录');
+                                    setTimeout(() => {
+                                        window.location.href = "./teacher.html";
+                                    }, 1000)
                                 } else {
                                     //获取数据失败
                                     this.$message.error(res.data.msg);
@@ -176,19 +191,25 @@
                             axios({
                                 method: "POST",
                                 url: basePath+"api/login/admin",
-                                data: this.formLoginInform
+                                data: {
+                                    username: this.formLoginInform.username,
+                                    password: this.formLoginInform.password
+                                }
                             }).then(res => {
                                 if (res.data.status === 0) {
                                     //获取数据成功
                                     this.$message.success(res.data.msg);
-                                    this.getData();
+                                    alert('管理员'+this.formLoginInform.username+'，您已成功登录');
+                                    setTimeout(() => {
+                                        window.location.href = "./admin.html";
+                                    }, 1000)
                                 } else {
                                     //获取数据失败
                                     this.$message.error(res.data.msg);
                                 }
                             })
                         }
-                        alert('用户'+this.formLoginInform.username+'，您已成功登录');
+
                     } else {
                         console.log('error submit!!');
                         return false;
@@ -207,12 +228,15 @@
                         axios({
                             method: "POST",
                             url: basePath+"api/student",
-                            data: this.formLoginInform
+                            data: {
+                                name: this.formLoginInform.name,
+                                idCard: this.formLoginInform.idCard,
+                                password: this.formLoginInform.password
+                            }
                         }).then(res => {
                             if (res.data.status === 0) {
                                 //获取数据成功
                                 this.$message.success(res.data.msg);
-                                this.getData();
                             } else {
                                 //获取数据失败
                                 this.$message.error(res.data.msg);
@@ -238,7 +262,7 @@
 </script>
 <style>
 .el-input{
-    width: 300px;
+    width: 250px;
 }
 
 </style>
