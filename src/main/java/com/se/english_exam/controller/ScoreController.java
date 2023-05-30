@@ -4,6 +4,7 @@ import com.se.english_exam.controller.util.Result;
 import com.se.english_exam.pojo.Score;
 import com.se.english_exam.pojo.Student;
 import com.se.english_exam.service.ScoreService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 成绩查询控制器
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/score")
 public class ScoreController {
@@ -29,6 +31,8 @@ public class ScoreController {
      */
     @GetMapping
     public Result getScore() {
+        log.info("学生查询成绩");
+
         Student student = (Student) request.getSession().getAttribute("student");
         Integer studentId = student.getId();
 

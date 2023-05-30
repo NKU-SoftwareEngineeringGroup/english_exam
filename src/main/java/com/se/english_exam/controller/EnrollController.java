@@ -33,7 +33,7 @@ public class EnrollController {
     public Result enroll() {
         Student student = (Student) request.getSession().getAttribute("student");
         Integer studentId = student.getId();
-        log.info("student enroll with id: " + studentId);
+        log.info("学生 id = {} 报名", studentId);
 
         if (enrollService.enroll(studentId)) {
             return new Result(Result.STATUS_SUCCESS, "报名成功", null);
@@ -47,6 +47,8 @@ public class EnrollController {
      */
     @DeleteMapping
     public Result reset() {
+        log.info("管理员清理报名信息");
+
         enrollService.reset();
         return new Result(Result.STATUS_SUCCESS, "重置成功", null);
     }
