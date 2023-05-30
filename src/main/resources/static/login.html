@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>英语六级考试报考系统</title>
+<!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link href="images/title.png" rel="icon"/>
+    <link href="thirdLib/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+    <script src="thirdLib/axios.js"></script>
+    <script src="thirdLib/vue.js"></script>
+    <script src="thirdLib/element-ui/lib/index.js"></script>
+</head>
+
+<body background="images/bg.jpg" style="background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%; ">
+<!--<div id="header">-->
+<!--    <div class="header_title">-->
+<!--        <span class="title_con">学工系统</span>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div id="app">
+
+    <el-row :gutter="20" type="flex" justify="center">
+        <el-col :span="24">
+            <div class="title-image">
+                <div class="block" key="fill">
+                    <span class="demonstration">{{ fill }}</span>
+                    <el-image
+                            src="images/head.png"
+                            fit="fill">
+                    </el-image>
+                </div>
+            </div>
+        </el-col>
+    </el-row>
+
+    <el-row :gutter="20" type="flex" justify="center">
+        <el-col :span="6">
+            <el-card shadow="always" v-if="isLogin==='True'">
+                <h1 style="text-align: center;">登录</h1>
+                <el-divider></el-divider>
+                <el-radio-group v-model="userType" size="small">
+                    <el-radio-button label="student">学生</el-radio-button>
+                    <el-radio-button label="teacher">教师</el-radio-button>
+                    <el-radio-button label="admin">管理人员</el-radio-button>
+                </el-radio-group>
+                <div style="margin: 20px;"></div>
+                <el-form label-position="right" label-width="80px" :model="formLoginInform" :rules="rules" ref="formLoginInform">
+                    <el-form-item label="身份证号" v-if="userType==='student'" prop="username">
+                        <el-input placeholder="请输入身份证号" v-model="formLoginInform.username" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户名" v-else prop="username">
+                        <el-input placeholder="请输入用户名" v-model="formLoginInform.username" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" prop="password">
+                        <el-input placeholder="请输入密码" v-model="formLoginInform.password" show-password></el-input>
+                    </el-form-item>
+                    <el-form-item style="text-align: center">
+                        <el-button type="primary" @click="submitForm('formLoginInform')">登录</el-button>
+                        <el-link icon="el-icon-edit" type="primary" style="float: right" @click="toRegister()">学生注册</el-link>
+                    </el-form-item>
+                </el-form>
+            </el-card>
+
+            <el-card shadow="always" v-if="isLogin==='False'">
+                <h1 style="text-align: center;">学生注册</h1>
+                <el-divider></el-divider>
+                <div style="margin: 20px;"></div>
+                <el-form label-position="right" label-width="80px" :model="formLoginInform" :rules="rules" ref="formLoginInform">
+                    <el-form-item label="姓名" prop="name">
+                        <el-input placeholder="请输入姓名" v-model="formLoginInform.name" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="身份证号" prop="idCard">
+                        <el-input placeholder="请输入身份证号" v-model="formLoginInform.idCard" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码" prop="password">
+                        <el-input placeholder="请输入密码" v-model="formLoginInform.password" show-password></el-input>
+                    </el-form-item>
+                    <el-form-item label="确认密码" prop="checkPass">
+                        <el-input placeholder="请再次输入密码" v-model="formLoginInform.checkPass" show-password></el-input>
+                    </el-form-item>
+                    <el-form-item style="text-align: center">
+                        <el-button type="primary" @click="registerForm('formLoginInform')">注册</el-button>
+                        <el-link icon="el-icon-user" type="primary" style="float: right" @click="toLogin()">登录页面</el-link>
+                    </el-form-item>
+                </el-form>
+            </el-card>
+        </el-col>
+    </el-row>
+</div>
+
+</body>
+
+<!--<script src="https://unpkg.com/vue@2/dist/vue.js"></script>-->
+<!--&lt;!&ndash; import JavaScript &ndash;&gt;-->
+<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+<script src="js/Var.js"></script>
+<!--<script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            var validatePass = (rule, value, callback) => {
+                if (value !== this.formLoginInform.password) {
+                    this.formLoginInform.checkPass='';
+                    callback(new Error('两次输入密码不一致!'));
+                } else {
+                    callback();
+                }
+            };
+            return {
+                isLogin: 'True',
+                userType: 'student',
+                formLoginInform:{
+                    username: '',
+                    password: '',
+                    name: '',
+                    idCard: '',
+                    checkPass: ''
+                },
+                rules: {
+                    username: [
+                        { required: true, message: '身份证号不能为空', trigger: 'blur' }
+                    ],
+                    password: [
+                        { required: true, message: '密码不能为空', trigger: 'blur' }
+                    ],
+                    name: [
+                        { required: true, message: '姓名不能为空', trigger: 'blur' }
+                    ],
+                    idCard: [
+                        { required: true, message: '身份证号不能为空', trigger: 'blur' }
+                    ],
+                    checkPass: [
+                        { validator: validatePass, trigger: 'blur' }
+                    ]
+                }
+            };
+        },
+        methods: {
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        if(this.userType==='student'){
+                            axios({
+                                method: "POST",
+                                url: basePath+"api/login/student",
+                                data: {
+                                    username: this.formLoginInform.username,
+                                    password: this.formLoginInform.password
+                                }
+                            }).then(res => {
+                                if (res.data.status === 0) {
+                                    //获取数据成功
+                                    this.$message.success(res.data.msg);
+                                    alert('学生'+this.formLoginInform.username+'，您已成功登录');
+                                    setTimeout(() => {
+                                        window.location.href = "./student.html";
+                                    }, 1000)
+                                } else {
+                                    //获取数据失败
+                                    this.$message.error(res.data.msg);
+                                }
+                            })
+
+                        }
+                        else if(this.userType==='teacher'){
+                            axios({
+                                method: "POST",
+                                url: basePath+"api/login/teacher",
+                                withCredentials: true,
+                                data: {
+                                    username: this.formLoginInform.username,
+                                    password: this.formLoginInform.password
+                                }
+                            }).then(res => {
+                                if (res.data.status === 0) {
+                                    //获取数据成功
+                                    this.$message.success(res.data.msg);
+                                    alert('教师'+this.formLoginInform.username+'，您已成功登录');
+                                    setTimeout(() => {
+                                        window.location.href = "./teacher.html";
+                                    }, 1000)
+                                } else {
+                                    //获取数据失败
+                                    this.$message.error(res.data.msg);
+                                }
+                            })
+                        }
+                        else {
+                            axios({
+                                method: "POST",
+                                url: basePath+"api/login/admin",
+                                data: {
+                                    username: this.formLoginInform.username,
+                                    password: this.formLoginInform.password
+                                }
+                            }).then(res => {
+                                if (res.data.status === 0) {
+                                    //获取数据成功
+                                    this.$message.success(res.data.msg);
+                                    alert('管理员'+this.formLoginInform.username+'，您已成功登录');
+                                    setTimeout(() => {
+                                        window.location.href = "./admin.html";
+                                    }, 1000)
+                                } else {
+                                    //获取数据失败
+                                    this.$message.error(res.data.msg);
+                                }
+                            })
+                        }
+
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            toRegister(){
+                this.isLogin='False';
+                this.formLoginInform.password='';
+                this.formLoginInform.username='';
+            },
+
+            registerForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        axios({
+                            method: "POST",
+                            url: basePath+"api/student",
+                            data: {
+                                name: this.formLoginInform.name,
+                                idCard: this.formLoginInform.idCard,
+                                password: this.formLoginInform.password
+                            }
+                        }).then(res => {
+                            if (res.data.status === 0) {
+                                //获取数据成功
+                                this.$message.success(res.data.msg);
+                            } else {
+                                //获取数据失败
+                                this.$message.error(res.data.msg);
+                            }
+                        })
+                        this.isLogin="True";
+                        this.formLoginInform.password='';
+                        this.formLoginInform.name='';
+                        this.formLoginInform.idCard='';
+                        alert(this.formLoginInform.name+'，您已成功注册');
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            toLogin(){
+                this.isLogin='True';
+                this.formLoginInform.password='';
+            }
+        }
+    })
+</script>
+<style>
+.el-input{
+    width: 250px;
+}
+
+</style>
+
+</html>
+
