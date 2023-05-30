@@ -1,6 +1,7 @@
 package com.se.english_exam.interceptor;
 
 import com.se.english_exam.exception.PermissionException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@Slf4j
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
@@ -64,6 +66,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             if (request.getSession().getAttribute(role) != null) {
                 return true;
             } else {
+                log.warn("{} 无权限访问 {} 接口", request.getRemoteAddr(),
+                        request.getRequestURI());
                 throw new PermissionException("权限错误");
             }
         }

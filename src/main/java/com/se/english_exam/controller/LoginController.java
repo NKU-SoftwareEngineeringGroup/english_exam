@@ -31,8 +31,7 @@ public class LoginController {
      */
     @PostMapping("/login/student")
     public Result studentLogin(@RequestBody LoginToken token) {
-        log.info("student login with idCard: " + token.getUsername() +
-                " and password: " + token.getPassword());
+        log.info("学生登录，用户名：{}", token.getUsername());
 
         Student student =
                 loginService.studentLogin(token.getUsername(), token.getPassword());
@@ -50,6 +49,8 @@ public class LoginController {
      */
     @PostMapping("/login/teacher")
     public Result teacherLogin(@RequestBody LoginToken token) {
+        log.info("老师登录，用户名：{}", token.getUsername());
+
         Teacher teacher =
                 loginService.teacherLogin(token.getUsername(), token.getPassword());
 
@@ -66,6 +67,8 @@ public class LoginController {
      */
     @PostMapping("/login/admin")
     public Result adminLogin(@RequestBody LoginToken token) {
+        log.info("管理员登录，用户名：{}", token.getUsername());
+
         Admin admin =
                 loginService.adminLogin(token.getUsername(), token.getPassword());
 
@@ -82,6 +85,8 @@ public class LoginController {
      */
     @PostMapping("/logout")
     public Result logout() {
+        log.info("登出");
+
         request.getSession().invalidate();
         return new Result(Result.STATUS_SUCCESS, "登出成功", null);
     }
@@ -91,6 +96,8 @@ public class LoginController {
      */
     @GetMapping("/username")
     public Result getUserName() {
+        log.info("获取已登录用户的名称");
+
         Student student = (Student) request.getSession().getAttribute("student");
         if (student != null) {
             return new Result(Result.STATUS_SUCCESS, "获取学生名称成功", student.getName());

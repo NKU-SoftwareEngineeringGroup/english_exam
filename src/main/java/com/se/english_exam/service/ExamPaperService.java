@@ -2,8 +2,7 @@ package com.se.english_exam.service;
 
 import com.se.english_exam.mapper.ExamPaperMapper;
 import com.se.english_exam.pojo.ExamPaper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,11 +12,9 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class ExamPaperService {
-
-    private static final Logger logger =
-            LoggerFactory.getLogger(ExamPaperService.class);
 
     @Resource
     private ValidPaperService validPaperService;
@@ -71,7 +68,7 @@ public class ExamPaperService {
         String filename = uuid + extension;
         File dest = new File("file", filename);
         file.transferTo(dest.getAbsoluteFile());
-        logger.info("file saved: " + dest.getAbsolutePath());
+        log.info("文件已保存：" + dest.getAbsolutePath());
 
         // 创建试卷
         ExamPaper examPaper = new ExamPaper();

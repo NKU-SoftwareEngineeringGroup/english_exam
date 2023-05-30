@@ -4,6 +4,7 @@ import com.se.english_exam.controller.util.Result;
 import com.se.english_exam.pojo.Answer;
 import com.se.english_exam.pojo.Student;
 import com.se.english_exam.service.AnswerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 作答信息控制器
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/answer")
 public class AnswerController {
@@ -32,6 +34,7 @@ public class AnswerController {
     public Result submitAnswer(@RequestBody Answer answer) {
         Student student = (Student) request.getSession().getAttribute("student");
         Integer studentId = student.getId();
+        log.info("学生 id = {} 提交答案", studentId);
 
         answer.setStudentId(studentId);
         if (answerService.submitAnswer(answer)) {

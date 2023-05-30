@@ -3,10 +3,12 @@ package com.se.english_exam.service;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.se.english_exam.mapper.StudentMapper;
 import com.se.english_exam.pojo.Student;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+@Slf4j
 @Service
 public class EnrollService {
 
@@ -21,6 +23,7 @@ public class EnrollService {
         }
 
         student.setEnroll(true);
+        log.info("学生 {} 报名成功", studentId);
 
         return studentMapper.updateById(student) == 1;
     }
