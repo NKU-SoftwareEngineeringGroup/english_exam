@@ -37,7 +37,8 @@ public class ScoreService {
             return null;
         }
 
-        log.info("学生成绩： 选择题 = {}, 主观题1 = {}, 主观题2 = {}",
+        log.info("学生ID = {}, 学生成绩： 选择题 = {}, 主观题1 = {}, 主观题2 = {}",
+                studentId,
                 answer.getChoiceScore(),
                 answer.getSubjective1Score(),
                 answer.getSubjective2Score()
