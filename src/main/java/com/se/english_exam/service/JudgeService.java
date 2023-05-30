@@ -6,12 +6,9 @@ import com.se.english_exam.pojo.Answer;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.logging.Logger;
 
 @Service
 public class JudgeService {
-
-    private static final Logger logger = Logger.getLogger(JudgeService.class.getName());
 
     @Resource
     private ValidPaperService validPaperService;
@@ -21,8 +18,6 @@ public class JudgeService {
 
     public Answer getStudentAnswer() {
         Integer paperId = validPaperService.getValidPaperId();
-
-        logger.info("paperId: " + paperId);
 
         LambdaQueryWrapper<Answer> wrapper = new LambdaQueryWrapper<>();
 

@@ -3,6 +3,7 @@ package com.se.english_exam.controller;
 import com.se.english_exam.controller.util.Result;
 import com.se.english_exam.pojo.ExamPaper;
 import com.se.english_exam.service.ExamPaperService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 /**
  * 试卷控制器
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/exam_paper")
 public class ExamPaperController {
@@ -25,6 +27,8 @@ public class ExamPaperController {
      */
     @GetMapping
     public Result getValidExamPaper() {
+        log.info("学生获取试卷信息");
+
         ExamPaper paper = service.getValidExamPaper();
         if (paper != null) {
             return new Result(Result.STATUS_SUCCESS, "查询成功", paper);
@@ -44,6 +48,8 @@ public class ExamPaperController {
             @RequestParam("startTime") Long startTime,
             @RequestParam("endTime") Long endTime
     ) throws IOException {
+        log.info("管理员上传试卷");
+
         if (service.createExamPaper(
                 file,
                 name,

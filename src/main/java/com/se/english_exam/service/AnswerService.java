@@ -3,10 +3,12 @@ package com.se.english_exam.service;
 import com.se.english_exam.mapper.AnswerMapper;
 import com.se.english_exam.pojo.Answer;
 import com.se.english_exam.pojo.ExamPaper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+@Slf4j
 @Service
 public class AnswerService {
 
@@ -34,6 +36,7 @@ public class AnswerService {
                 score += 2;
             }
         }
+        log.info("选择题得分：" + score);
 
         return score;
     }
