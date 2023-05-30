@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.se.english_exam.mapper.AnswerMapper;
 import com.se.english_exam.pojo.Answer;
 import com.se.english_exam.pojo.Score;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+@Slf4j
 @Service
 public class ScoreService {
 
@@ -34,6 +36,12 @@ public class ScoreService {
         if (answer == null) {
             return null;
         }
+
+        log.info("学生成绩： 选择题 = {}, 主观题1 = {}, 主观题2 = {}",
+                answer.getChoiceScore(),
+                answer.getSubjective1Score(),
+                answer.getSubjective2Score()
+        );
 
         // 抽取答案部分，返回给前端
         return new Score(
