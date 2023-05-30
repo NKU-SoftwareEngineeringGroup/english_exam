@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>管理员首页</title>
+    <title>判卷</title>
     <!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
-    <link href="../static/images/title.png" rel="icon"/>
-    <link href="../static/thirdLib/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
-    <script src="../static/thirdLib/axios.js"></script>
-    <script src="../static/thirdLib/vue.js"></script>
-    <script src="../static/thirdLib/element-ui/lib/index.js"></script>
+    <link href="images/title.png" rel="icon"/>
+    <link href="thirdLib/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+    <script src="thirdLib/axios.js"></script>
+    <script src="thirdLib/vue.js"></script>
+    <script src="thirdLib/element-ui/lib/index.js"></script>
 </head>
 
 <body>
@@ -22,15 +22,11 @@
     <el-row :gutter="20" type="flex" justify="center">
         <el-col :span="6">
             <el-card shadow="always" style="text-align: center">
-                <h1 style="text-align: center;">管理员首页</h1>
+                <h1 style="text-align: center;">教师首页</h1>
                 <el-divider></el-divider>
-                <img src="../static/images/paperin.jpg"  class="image" >
+                <img src="images/judge.jpg"  class="image" >
                 <div style="padding: 14px">
-                    <el-button type="primary" plain>录入试卷</el-button>
-                </div>
-                <img src="../static/images/empty.jpg"  class="image" >
-                <div style="padding: 14px">
-                    <el-button type="primary" plain>清空报名</el-button>
+                    <el-button type="primary" @click="toJudge()" plain >前往判卷</el-button>
                 </div>
             </el-card>
         </el-col>
@@ -38,7 +34,7 @@
 </div>
 </body>
 
-<script src="../static/js/Var.js"></script>
+<script src="js/Var.js"></script>
 
 <script>
     new Vue({
@@ -46,6 +42,13 @@
         data() {
             return{
 
+            }
+        },
+        methods: {
+            toJudge() {
+                setTimeout(() => {
+                    window.location.href = "./login.html";
+                }, 1000)
             }
         }
     })

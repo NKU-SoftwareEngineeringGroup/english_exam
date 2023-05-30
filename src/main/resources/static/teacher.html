@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>教师首页</title>
     <!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
-    <link href="../static/images/title.png" rel="icon"/>
-    <link href="../static/thirdLib/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
-    <script src="../static/thirdLib/axios.js"></script>
-    <script src="../static/thirdLib/vue.js"></script>
-    <script src="../static/thirdLib/element-ui/lib/index.js"></script>
+    <link href="images/title.png" rel="icon"/>
+    <link href="thirdLib/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+    <script src="thirdLib/axios.js"></script>
+    <script src="thirdLib/vue.js"></script>
+    <script src="thirdLib/element-ui/lib/index.js"></script>
 </head>
 
 <body bgcolor="#f0f8ff">
@@ -27,7 +27,7 @@
             <el-card shadow="always" style="text-align: center">
                 <h1 style="text-align: center;">教师首页</h1>
                 <el-divider></el-divider>
-                <img src="../static/images/judge.jpg"  class="image" >
+                <img src="images/judge.jpg"  class="image" >
                 <div style="padding: 14px">
                     <el-button type="primary" @click="toJudge()" plain >前往判卷</el-button>
                 </div>
@@ -37,7 +37,7 @@
 </div>
 </body>
 
-<script src="../static/js/Var.js"></script>
+<script src="js/Var.js"></script>
 
 <script>
     new Vue({
@@ -52,7 +52,6 @@
         },
         methods: {
             getUsername() {
-                axios.defaults.withCredentials=true;
                 axios({
                     method: "GET",
                     url: basePath+"api/username",
@@ -63,7 +62,7 @@
                         this.username = res.data.data;
                     } else {
                         //获取数据失败
-                        this.$message.error(res.data.username);
+                        this.$message.error(res.data.msg);
                     }
                 })
             },
