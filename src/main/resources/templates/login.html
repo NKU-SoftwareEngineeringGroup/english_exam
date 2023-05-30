@@ -10,7 +10,7 @@
     <script src="../static/thirdLib/vue.js"></script>
     <script src="../static/thirdLib/element-ui/lib/index.js"></script>
 </head>
-<body background="../static/images/2.jpg" style="background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%; ">
+<body background="../static/images/bg.jpg" style="background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%; ">
 <!--<div id="header">-->
 <!--    <div class="header_title">-->
 <!--        <span class="title_con">学工系统</span>-->
@@ -25,7 +25,7 @@
                 <div class="block" key="fill">
                     <span class="demonstration">{{ fill }}</span>
                     <el-image
-                            src="../static/images/3.png"
+                            src="../static/images/head.png"
                             fit="fill">
                     </el-image>
                 </div>
@@ -41,7 +41,7 @@
                 <el-radio-group v-model="userType" size="small">
                     <el-radio-button label="student">学生</el-radio-button>
                     <el-radio-button label="teacher">教师</el-radio-button>
-                    <el-radio-button label="manager">管理人员</el-radio-button>
+                    <el-radio-button label="admin">管理人员</el-radio-button>
                 </el-radio-group>
                 <div style="margin: 20px;"></div>
                 <el-form label-position="right" label-width="80px" :model="formLoginInform" :rules="rules" ref="formLoginInform">
@@ -140,6 +140,54 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
+                        if(this.userType==='student'){
+                            axios({
+                                method: "POST",
+                                url: basePath+"api/login/student",
+                                data: this.formLoginInform
+                            }).then(res => {
+                                if (res.data.status === 0) {
+                                    //获取数据成功
+                                    this.$message.success(res.data.msg);
+                                    this.getData();
+                                } else {
+                                    //获取数据失败
+                                    this.$message.error(res.data.msg);
+                                }
+                            })
+                        }
+                        else if(this.userType==='teacher'){
+                            axios({
+                                method: "POST",
+                                url: basePath+"api/login/teacher",
+                                data: this.formLoginInform
+                            }).then(res => {
+                                if (res.data.status === 0) {
+                                    //获取数据成功
+                                    this.$message.success(res.data.msg);
+                                    this.getData();
+                                } else {
+                                    //获取数据失败
+                                    this.$message.error(res.data.msg);
+                                }
+                            })
+                        }
+                        else {
+                            axios({
+                                method: "POST",
+                                url: basePath+"api/login/admin",
+                                data: this.formLoginInform
+                            }).then(res => {
+                                if (res.data.status === 0) {
+                                    //获取数据成功
+                                    this.$message.success(res.data.msg);
+                                    this.getData();
+                                } else {
+                                    //获取数据失败
+                                    this.$message.error(res.data.msg);
+                                }
+                            })
+                        }
                         alert('用户'+this.formLoginInform.username+'，您已成功登录');
                     } else {
                         console.log('error submit!!');
@@ -150,6 +198,7 @@
             toRegister(){
                 this.isLogin='False';
                 this.formLoginInform.password='';
+                this.formLoginInform.username='';
             },
 
             registerForm(formName) {
@@ -157,7 +206,7 @@
                     if (valid) {
                         axios({
                             method: "POST",
-                            url: "http://39.105.177.215:9030/api/student",
+                            url: basePath+"api/student",
                             data: this.formLoginInform
                         }).then(res => {
                             if (res.data.status === 0) {
@@ -169,8 +218,10 @@
                                 this.$message.error(res.data.msg);
                             }
                         })
-                        this.formLoginInform.password=''
                         this.isLogin="True";
+                        this.formLoginInform.password='';
+                        this.formLoginInform.name='';
+                        this.formLoginInform.idCard='';
                         alert(this.formLoginInform.name+'，您已成功注册');
                     } else {
                         console.log('error submit!!');
