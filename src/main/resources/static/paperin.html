@@ -2,9 +2,236 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>上传试卷</title>
+    <!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link href="images/title.png" rel="icon"/>
+    <link href="thirdLib/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+    <script src="thirdLib/axios.js"></script>
+    <script src="thirdLib/vue.js"></script>
+    <script src="thirdLib/element-ui/lib/index.js"></script>
 </head>
-<body>
+
+<body bgcolor="#f0f8ff">
+<div id="app">
+    <el-row :gutter="20" class="row-header" type="flex" justify="center">
+        <el-col :span="21">
+            <div class="grid-content"></div>
+        </el-col>
+        <el-col :span="3" >
+            <h2 class='header-h2'>{{username}}</h2>
+        </el-col>
+    </el-row>
+
+    <div style="margin: 20px;"></div>
+    <el-row :gutter="20" type="flex" justify="center">
+        <el-col :span="12">
+            <div style="text-align: center">
+                <el-upload
+                        class="upload-demo"
+                        drag
+                        ref="upload"
+                        action="http://127.0.0.1:8080/api/exam_paper"
+                        accept=".pdf"
+                        :before-upload="beforeUpload"
+                        :on-success="onSuccess"
+                        :on-error="onError"
+                        :auto-upload="false"
+                        :data="{
+                            name: this.examInform.name,
+                            answer: this.examInform.answer,
+                            startTime: this.examInform.startTime,
+                            endTime: this.examInform.endTime
+                        }"
+                        >
+                    <i class="el-icon-upload"></i>
+                    <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                    <div class="el-upload__tip" slot="tip">仅允许上传.pdf文件，且不超过10MB</div>
+                </el-upload>
+            </div>
+        </el-col>
+    </el-row>
+
+    <div style="margin: 40px;"></div>
+    <el-row :gutter="20" type="flex" justify="center" >
+        <el-col :span="12" style="text-align: center">
+            <el-button type="primary" @click="finalSubmit()">提交</el-button>
+        </el-col>
+    </el-row>
+
+    <el-dialog
+            title="试卷信息"
+            :visible.sync="dialogVisible"
+            :before-close="handleClose"
+            width="30%">
+        <el-divider></el-divider>
+        <el-form :label-position="labelPosition" label-width="100px" :model="examInform">
+            <el-form-item label="试卷名称">
+                <el-input
+                        placeholder="请输入内容"
+                        prefix-icon="el-icon-s-order"
+                        v-model="examInform.name"
+                        style="width: 200px">
+                </el-input>
+            </el-form-item>
+
+            <el-form-item label="考试开始时间">
+                <el-date-picker
+                        v-model="examInform.startTime"
+                        type="datetime"
+                        placeholder="选择日期时间">
+                </el-date-picker>
+            </el-form-item>
+
+            <el-form-item label="考试结束时间">
+                <el-date-picker
+                        v-model="examInform.endTime"
+                        type="datetime"
+                        placeholder="选择日期时间">
+                </el-date-picker>
+            </el-form-item>
+        </el-form>
+
+        <div style="margin: 20px;"></div>
+        客观题答案：
+        <el-row :gutter="20" type="flex" justify="center">
+            <el-col :span="20" :offset="4">
+                <el-card  style="background-color: #dcdfe7; width: 300px">
+                    <div v-for="item in 4" :key="item">
+                        <h3>第{{item}}题</h3>
+                        <template>
+                            <el-radio-group v-model=answerList[item-1]>
+                                <el-radio :label="1">A</el-radio>
+                                <el-radio :label="2">B</el-radio>
+                                <el-radio :label="3">C</el-radio>
+                                <el-radio :label="4">D</el-radio>
+                            </el-radio-group>
+                        </template>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+
+        <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="submitForm()">确 定</el-button>
+        </span>
+    </el-dialog>
+</div>
+
 
 </body>
+
+<script src="js/Var.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        mounted() {
+            this.getUsername();
+        },
+        data() {
+            return {
+                username: "",
+                dialogVisible: true,
+                answerList: [null,null,null,null],
+                examInform: {
+                    name: "",
+                    answer: "",
+                    startTime: null,
+                    endTime: null
+                }
+            }
+        },
+        methods: {
+            getUsername() {
+                axios({
+                    method: "GET",
+                    url: basePath + "api/username",
+                }).then(res => {
+                    if (res.data.status === 0) {
+                        //获取数据成功
+                        // this.$message.success(res.data.msg);
+                        this.username = res.data.data;
+                    } else {
+                        //获取数据失败
+                        this.$message.error(res.data.msg);
+                    }
+                })
+            },
+            beforeUpload(file) {
+                const isLt2M = file.size / 1024 / 1024 < 10     //这里做文件大小限制
+                if(!isLt2M) {
+                    this.$message({
+                        message: '上传文件大小不能超过 10MB!',
+                        type: 'warning'
+                    });
+                }
+                return isLt2M
+            },
+            handleClose(done) {
+                this.$confirm('确认关闭？')
+                    .then(_ => {
+                        done();
+                        setTimeout(() => {
+                            window.location.href = "./admin.html";
+                        }, 100)
+                    })
+                    .catch(_ => {});
+            },
+            onSuccess(response, file, fileList) {
+                this.$message({
+                    message: '创建考试成功!',
+                    type: 'success'
+                });
+            },
+            onError(err, file, fileList) {
+                this.$message({
+                    message: '上传失败！',
+                    type: 'error'
+                });
+            },
+            submitForm() {
+                if(this.examInform.name===''){
+                    alert('您未输入试卷名称！')
+                }
+                else if(this.examInform.startTime===null || this.examInform.endTime===null){
+                    alert('您有时间未选择！');
+                }
+                else if(this.answerList[0]===null || this.answerList[1]===null || this.answerList[2]===null || this.answerList[3]===null){
+                    alert('您有答案未选择！')
+                }
+                else{
+                    this.dialogVisible=false;
+                    this.examInform.startTime = this.examInform.startTime.getTime();
+                    this.examInform.endTime = this.examInform.endTime.getTime();
+                    for(var i=0;i<4;i++){
+                        if(i!==0)this.examInform.answer=this.examInform.answer+';';
+                        if(this.answerList[i]===1)this.examInform.answer=this.examInform.answer+'A';
+                        else if(this.answerList[i]===2)this.examInform.answer=this.examInform.answer+'B';
+                        else if(this.answerList[i]===3)this.examInform.answer=this.examInform.answer+'C';
+                        else if(this.answerList[i]===4)this.examInform.answer=this.examInform.answer+'D';
+                    }
+                    this.examInform.answer=this.examInform.answer+';';
+                }
+            },
+            finalSubmit(){
+                this.$refs.upload.submit();
+            }
+        }
+    })
+</script>
+
+<style>
+    .grid-content{
+        min-height: 40px;
+    }
+    .header-h2{
+        color:#fff ;
+    }
+    .header-h2:hover{
+        color:#fff ;
+    }
+    .row-header{
+        background:#409eff;
+    }
+
+</style>
 </html>
