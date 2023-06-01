@@ -70,7 +70,7 @@
                         placeholder="请输入内容"
                         prefix-icon="el-icon-s-order"
                         v-model="examInform.name"
-                        style="width: 200px">
+                        style="width: fit-content">
                 </el-input>
             </el-form-item>
 
@@ -78,7 +78,8 @@
                 <el-date-picker
                         v-model="examInform.startTime"
                         type="datetime"
-                        placeholder="选择日期时间">
+                        placeholder="选择日期时间"
+                        style="width: fit-content">
                 </el-date-picker>
             </el-form-item>
 
@@ -86,7 +87,8 @@
                 <el-date-picker
                         v-model="examInform.endTime"
                         type="datetime"
-                        placeholder="选择日期时间">
+                        placeholder="选择日期时间"
+                        style="width: fit-content">
                 </el-date-picker>
             </el-form-item>
         </el-form>
@@ -95,7 +97,7 @@
         客观题答案：
         <el-row :gutter="20" type="flex" justify="center">
             <el-col :span="20" :offset="4">
-                <el-card  style="background-color: #dcdfe7; width: 300px">
+                <el-card  style="background-color: #dcdfe7; width: fit-content">
                     <div v-for="item in 4" :key="item">
                         <h3>第{{item}}题</h3>
                         <template>

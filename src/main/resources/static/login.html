@@ -120,16 +120,16 @@
                 },
                 rules: {
                     username: [
-                        { required: true, message: '身份证号不能为空', trigger: 'blur' }
+                        { required: true, message: '不能为空', trigger: 'blur' }
                     ],
                     password: [
-                        { required: true, message: '密码不能为空', trigger: 'blur' }
+                        { required: true, message: '不能为空', trigger: 'blur' }
                     ],
                     name: [
-                        { required: true, message: '姓名不能为空', trigger: 'blur' }
+                        { required: true, message: '不能为空', trigger: 'blur' }
                     ],
                     idCard: [
-                        { required: true, message: '身份证号不能为空', trigger: 'blur' }
+                        { required: true, message: '不能为空', trigger: 'blur' }
                     ],
                     checkPass: [
                         { validator: validatePass, trigger: 'blur' }
@@ -262,7 +262,7 @@
 </script>
 <style>
 .el-input{
-    width: 250px;
+    width: fit-content;
 }
 
 </style>
