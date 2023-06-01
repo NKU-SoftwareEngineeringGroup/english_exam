@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>考试报名</title>
+    <!--    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link href="images/title.png" rel="icon"/>
+    <link href="thirdLib/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+    <script src="thirdLib/axios.js"></script>
+    <script src="thirdLib/vue.js"></script>
+    <script src="thirdLib/element-ui/lib/index.js"></script>
+</head>
+
+<body bgcolor="#f0f8ff">
+<div id="app">
+    <el-row :gutter="20" class="row-header" type="flex" justify="center">
+        <el-col :span="21">
+            <div class="grid-content"></div>
+        </el-col>
+        <el-col :span="3" >
+            <h2 class='header-h2'>{{username}}</h2>
+        </el-col>
+    </el-row>
+    <div style="margin: 20px;"></div>
+    <el-row :gutter="20" type="flex" justify="center">
+        <el-col :span="6">
+            <el-card shadow="always" style="text-align: center">
+                <h1 style="text-align: center;">考试报名</h1>
+                <el-divider></el-divider>
+
+                <div style="padding: 14px">
+                    <el-button type="primary" @click="enroll()" plain >确认报名</el-button>
+                </div>
+            </el-card>
+        </el-col>
+    </el-row>
+</div>
+</body>
+
+<script src="js/Var.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        mounted() {
+            this.getUsername();
+        },
+        data() {
+            return{
+                username: "",
+            }
+        },
+        methods: {
+            getUsername() {
+                axios({
+                    method: "GET",
+                    url: basePath+"api/username",
+                }).then(res => {
+                    if (res.data.status === 0) {
+                        //获取数据成功
+                        // this.$message.success(res.data.msg);
+                        this.username = res.data.data;
+                    } else {
+                        //获取数据失败
+                        this.$message.error(res.data.msg);
+                    }
+                })
+            },
+            enroll() {
+                axios({
+                    method: "POST",
+                    url: basePath+"api/enroll",
+                    data: {
+                        id: this.enroll.id,
+                    }
+                }).then(res => {
+                    if (res.data.status === 0) {
+                        //获取数据成功
+                        this.$message.success(res.data.msg);
+                        this.$alert('请缴纳报名费', '报名缴费', {
+                            confirmButtonText: '缴费完成',
+                            callback: action => {
+                                alert('学生'+this.formLoginInform.username+'，您已成功报名');
+                            }
+                        });
+                    } else {
+                        //获取数据失败
+                        this.$message.error(res.data.msg);
+                    }
+                })
+            }
+        }
+    })
+</script>
+<style>
+    .grid-content{
+        min-height: 40px;
+    }
+    .header-h2{
+        color:#fff ;
+
+    }
+    .header-h2:hover{
+        color:#fff ;
+    }
+    .row-header{
+        background:#409eff;
+    }
+
+</style>
+</html>
