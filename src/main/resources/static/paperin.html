@@ -11,19 +11,78 @@
     <script src="thirdLib/element-ui/lib/index.js"></script>
 </head>
 
-<body background="images/bg2.png" style="background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;">
+<body background="images/bg2.png"
+      style="background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;">
 <div id="app">
     <el-row class="row-header" type="flex" justify="center">
         <el-col :span="20">
             <div class="grid-content"></div>
         </el-col>
-        <el-col :span="2" >
-            <h2 class='header-h2'>{{username}}</h2>
+        <el-col :span="2">
+            <h2 class='header-h2'>{{ username }}</h2>
         </el-col>
         <el-col :span="2">
             <div style="padding-top: 15px">
                 <el-button type="danger" icon="el-icon-caret-left" @click="logOut()" round>退出登录</el-button>
             </div>
+        </el-col>
+    </el-row>
+
+    <div style="margin: 20px;"></div>
+    <el-row :gutter="20" type="flex" justify="center">
+        <el-col :span="8">
+            <el-card shadow="always">
+                <h1 style="text-align: center;">上传试卷</h1>
+                <el-divider></el-divider>
+                <el-form label-width="100px" :model="examInform">
+                    <el-form-item label="试卷名称">
+                        <el-input
+                                placeholder="请输入内容"
+                                prefix-icon="el-icon-s-order"
+                                v-model="examInform.name"
+                                style="width: fit-content">
+                        </el-input>
+                    </el-form-item>
+
+                    <el-form-item label="考试开始时间">
+                        <el-date-picker
+                                v-model="examInform.startTime"
+                                type="datetime"
+                                placeholder="选择日期时间"
+                                style="width: fit-content">
+                        </el-date-picker>
+                    </el-form-item>
+
+                    <el-form-item label="考试结束时间">
+                        <el-date-picker
+                                v-model="examInform.endTime"
+                                type="datetime"
+                                placeholder="选择日期时间"
+                                style="width: fit-content">
+                        </el-date-picker>
+                    </el-form-item>
+                </el-form>
+
+                <div style="margin: 20px;"></div>
+                客观题答案：
+                <el-row :gutter="20" type="flex" justify="center">
+                    <el-col :span="20" :offset="4">
+                        <el-card style="background-color: #dcdfe7; width: fit-content">
+                            <div v-for="item in 4" :key="item">
+                                <h3>第{{ item }}题</h3>
+                                <template>
+                                    <el-radio-group v-model=answerList[item-1]>
+                                        <el-radio :label="1">A</el-radio>
+                                        <el-radio :label="2">B</el-radio>
+                                        <el-radio :label="3">C</el-radio>
+                                        <el-radio :label="4">D</el-radio>
+                                    </el-radio-group>
+                                </template>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </el-card>
         </el-col>
     </el-row>
 
@@ -35,19 +94,14 @@
                         class="upload-demo"
                         drag
                         ref="upload"
-                        action="http://127.0.0.1:8080/api/exam_paper"
+                        action="api/exam_paper"
                         accept=".pdf"
                         :before-upload="beforeUpload"
                         :on-success="onSuccess"
                         :on-error="onError"
                         :auto-upload="false"
-                        :data="{
-                            name: this.examInform.name,
-                            answer: this.examInform.answer,
-                            startTime: this.examInform.startTime,
-                            endTime: this.examInform.endTime
-                        }"
-                        >
+                        :data="examInform"
+                >
                     <i class="el-icon-upload"></i>
                     <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                     <div class="el-upload__tip" slot="tip">仅允许上传.pdf文件，且不超过10MB</div>
@@ -57,71 +111,12 @@
     </el-row>
 
     <div style="margin: 40px;"></div>
-    <el-row :gutter="20" type="flex" justify="center" >
+    <el-row :gutter="20" type="flex" justify="center">
         <el-col :span="12" style="text-align: center">
             <el-button type="primary" @click="finalSubmit()">提交</el-button>
         </el-col>
     </el-row>
 
-    <el-dialog
-            title="试卷信息"
-            :visible.sync="dialogVisible"
-            :before-close="handleClose"
-            width="30%">
-        <el-divider></el-divider>
-        <el-form :label-position="labelPosition" label-width="100px" :model="examInform">
-            <el-form-item label="试卷名称">
-                <el-input
-                        placeholder="请输入内容"
-                        prefix-icon="el-icon-s-order"
-                        v-model="examInform.name"
-                        style="width: fit-content">
-                </el-input>
-            </el-form-item>
-
-            <el-form-item label="考试开始时间">
-                <el-date-picker
-                        v-model="examInform.startTime"
-                        type="datetime"
-                        placeholder="选择日期时间"
-                        style="width: fit-content">
-                </el-date-picker>
-            </el-form-item>
-
-            <el-form-item label="考试结束时间">
-                <el-date-picker
-                        v-model="examInform.endTime"
-                        type="datetime"
-                        placeholder="选择日期时间"
-                        style="width: fit-content">
-                </el-date-picker>
-            </el-form-item>
-        </el-form>
-
-        <div style="margin: 20px;"></div>
-        客观题答案：
-        <el-row :gutter="20" type="flex" justify="center">
-            <el-col :span="20" :offset="4">
-                <el-card  style="background-color: #dcdfe7; width: fit-content">
-                    <div v-for="item in 4" :key="item">
-                        <h3>第{{item}}题</h3>
-                        <template>
-                            <el-radio-group v-model=answerList[item-1]>
-                                <el-radio :label="1">A</el-radio>
-                                <el-radio :label="2">B</el-radio>
-                                <el-radio :label="3">C</el-radio>
-                                <el-radio :label="4">D</el-radio>
-                            </el-radio-group>
-                        </template>
-                    </div>
-                </el-card>
-            </el-col>
-        </el-row>
-
-        <span slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="submitForm()">确 定</el-button>
-        </span>
-    </el-dialog>
 </div>
 
 
@@ -137,8 +132,7 @@
         data() {
             return {
                 username: "",
-                dialogVisible: true,
-                answerList: [null,null,null,null],
+                answerList: [null, null, null, null],
                 examInform: {
                     name: "",
                     answer: "",
@@ -165,29 +159,30 @@
             },
             beforeUpload(file) {
                 const isLt2M = file.size / 1024 / 1024 < 10     //这里做文件大小限制
-                if(!isLt2M) {
+                if (!isLt2M) {
                     this.$message({
                         message: '上传文件大小不能超过 10MB!',
                         type: 'warning'
                     });
+                    return false;
                 }
-                return isLt2M
-            },
-            handleClose(done) {
-                this.$confirm('确认关闭？')
-                    .then(_ => {
-                        done();
-                        setTimeout(() => {
-                            window.location.href = "./admin.html";
-                        }, 100)
-                    })
-                    .catch(_ => {});
+                return true;
             },
             onSuccess(response, file, fileList) {
                 this.$message({
                     message: '创建考试成功!',
                     type: 'success'
                 });
+                setTimeout(() => {
+                    this.$confirm('确认关闭？')
+                        .then(_ => {
+                            setTimeout(() => {
+                                window.location.href = "./admin.html";
+                            }, 100)
+                        })
+                        .catch(_ => {
+                        });
+                }, 1000)
             },
             onError(err, file, fileList) {
                 this.$message({
@@ -195,37 +190,38 @@
                     type: 'error'
                 });
             },
-            submitForm() {
-                if(this.examInform.name===''){
+            checkForm() {
+                if (this.examInform.name === '') {
                     alert('您未输入试卷名称！')
-                }
-                else if(this.examInform.startTime===null || this.examInform.endTime===null){
+                    return false;
+                } else if (this.examInform.startTime === null || this.examInform.endTime === null) {
                     alert('您有时间未选择！');
-                }
-                else if(this.answerList[0]===null || this.answerList[1]===null || this.answerList[2]===null || this.answerList[3]===null){
+                    return false;
+                } else if (this.answerList[0] === null || this.answerList[1] === null || this.answerList[2] === null || this.answerList[3] === null) {
                     alert('您有答案未选择！')
+                    return false;
                 }
-                else{
-                    this.dialogVisible=false;
-                    this.examInform.startTime = this.examInform.startTime.getTime();
-                    this.examInform.endTime = this.examInform.endTime.getTime();
-                    for(var i=0;i<4;i++){
-                        if(i!==0)this.examInform.answer=this.examInform.answer+';';
-                        if(this.answerList[i]===1)this.examInform.answer=this.examInform.answer+'A';
-                        else if(this.answerList[i]===2)this.examInform.answer=this.examInform.answer+'B';
-                        else if(this.answerList[i]===3)this.examInform.answer=this.examInform.answer+'C';
-                        else if(this.answerList[i]===4)this.examInform.answer=this.examInform.answer+'D';
-                    }
-                    this.examInform.answer=this.examInform.answer+';';
+                this.examInform.startTime = this.examInform.startTime.getTime();
+                this.examInform.endTime = this.examInform.endTime.getTime();
+                for (var i = 0; i < 4; i++) {
+                    if (i !== 0) this.examInform.answer = this.examInform.answer + ';';
+                    if (this.answerList[i] === 1) this.examInform.answer = this.examInform.answer + 'A';
+                    else if (this.answerList[i] === 2) this.examInform.answer = this.examInform.answer + 'B';
+                    else if (this.answerList[i] === 3) this.examInform.answer = this.examInform.answer + 'C';
+                    else if (this.answerList[i] === 4) this.examInform.answer = this.examInform.answer + 'D';
                 }
+                this.examInform.answer = this.examInform.answer + ';';
+                return true;
             },
-            finalSubmit(){
-                this.$refs.upload.submit();
+            finalSubmit() {
+                if (this.checkForm()) {
+                    this.$refs.upload.submit();
+                }
             },
             logOut() {
                 axios({
                     method: "POST",
-                    url: basePath+"api/logout",
+                    url: basePath + "api/logout",
                 }).then(res => {
                     if (res.data.status === 0) {
                         //获取数据成功
@@ -251,17 +247,21 @@
         width: 100%;
         height: 100%;
     }
-    .grid-content{
+
+    .grid-content {
         min-height: 40px;
     }
-    .header-h2{
-        color:#fff ;
+
+    .header-h2 {
+        color: #fff;
     }
-    .header-h2:hover{
-        color:#fff ;
+
+    .header-h2:hover {
+        color: #fff;
     }
-    .row-header{
-        background:#409eff;
+
+    .row-header {
+        background: #409eff;
     }
 
 </style>
