@@ -14,11 +14,16 @@
 <body bgcolor="#f0f8ff">
 <div id="app">
     <el-row :gutter="20" class="row-header" type="flex" justify="center">
-        <el-col :span="21">
+        <el-col :span="20">
             <div class="grid-content"></div>
         </el-col>
-        <el-col :span="3" >
+        <el-col :span="2" >
             <h2 class='header-h2'>{{username}}</h2>
+        </el-col>
+        <el-col :span="2">
+            <div style="padding-top: 25px">
+                <el-link type="warning" style="color: #dc1125" @click="logOut()">退出登录</el-link>
+            </div>
         </el-col>
     </el-row>
 
@@ -216,6 +221,23 @@
             },
             finalSubmit(){
                 this.$refs.upload.submit();
+            },
+            logOut() {
+                axios({
+                    method: "POST",
+                    url: basePath+"api/logout",
+                }).then(res => {
+                    if (res.data.status === 0) {
+                        //获取数据成功
+                        this.$message.success(res.data.msg);
+                        setTimeout(() => {
+                            window.location.href = "./login.html";
+                        }, 1000)
+                    } else {
+                        //获取数据失败
+                        this.$message.error(res.data.msg);
+                    }
+                })
             }
         }
     })
