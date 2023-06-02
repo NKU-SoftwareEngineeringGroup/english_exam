@@ -11,7 +11,7 @@
     <script src="thirdLib/element-ui/lib/index.js"></script>
 </head>
 
-<body bgcolor="#f0f8ff">
+<body background="images/bg2.png" style="background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;">
 <div id="app">
     <el-row :gutter="20" class="row-header" type="flex" justify="center">
         <el-col :span="20">
@@ -21,8 +21,8 @@
             <h2 class='header-h2'>{{username}}</h2>
         </el-col>
         <el-col :span="2">
-            <div style="padding-top: 25px">
-                <el-link type="warning" style="color: #dc1125" @click="logOut()">退出登录</el-link>
+            <div style="padding-top: 15px">
+                    <el-button type="danger" icon="el-icon-caret-left" @click="logOut()" round>退出登录</el-button>
             </div>
         </el-col>
     </el-row>
