@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生首页</title>
+    <link href="images/title.png" rel="icon"/>
+    <link href="thirdLib/element-ui/lib/theme-chalk/index.css" rel="stylesheet">
+    <script src="thirdLib/axios.js"></script>
+    <script src="thirdLib/vue.js"></script>
+    <script src="thirdLib/element-ui/lib/index.js"></script>
+</head>
+
+<body>
+<div id="app">
+    <el-row style="background-color: #F2F2F2">
+        <el-col :span="4" align="middle" style="margin: 5px">
+            <el-link>中国教育考试网</el-link>
+        </el-col>
+    </el-row>
+    <el-row>
+        <el-col :span="22" :offset="1">
+            <el-menu mode="horizontal" :default-active="activeSelect">
+                <el-menu-item>
+                    <img src="images/cet-name.jpg" alt="cet-name">
+                </el-menu-item>
+                <el-menu-item index="7" style="float: right">常见问题</el-menu-item>
+                <el-menu-item index="6" style="float: right">分数解释</el-menu-item>
+                <el-menu-item index="5" style="float: right">考核内容</el-menu-item>
+                <el-menu-item index="4" style="float: right">考试大纲</el-menu-item>
+                <el-menu-item index="3" style="float: right">CET委员会</el-menu-item>
+                <el-menu-item index="2" style="float: right">考试动态</el-menu-item>
+                <el-menu-item index="1" style="float: right">首页</el-menu-item>
+            </el-menu>
+        </el-col>
+    </el-row>
+    <el-row style="height:320px;background:url(images/cet-bg.png) center; top: 0; left: 0; width: 100%">
+        <el-col :span="10" :offset="2">
+            <el-link type="primary" style="font-size: 24px; margin-top: 30px">
+                2023年上半年全国大学英语四、六级考试报名工作启动
+            </el-link>
+            <p style="text-indent:2em; color:#838383; margin-top: 30px">
+                2023年上半年考试笔试及口试将分别于6月17日，5月20至21日举行，各地报名工作陆续启动。
+            </p>
+            <el-link style="margin-top: 30px">
+                · 2022年下半年全国大学英语四、六级考试加考（3月）成绩查询有关安排
+            </el-link>
+            <el-link>
+                · 2022年下半年（12月）全国大学英语四、六级考试（CET）成绩查询有关安排...
+            </el-link>
+            <el-link type="warning" style="float: right; margin-top: 30px">
+                更多>>
+            </el-link>
+        </el-col>
+
+        <el-col :span="10" :offset="2">
+            <p style="font-size: 50px; margin-top: 60px; color: red">
+                仅用于课程作业展示
+            </p>
+        </el-col>
+    </el-row>
+    <el-row :gutter="20" style="margin-top: 20px; margin-left: 10%; margin-right: 10%">
+        <el-col :span="6">
+            <div style="border: 1px solid #ccc; padding: 20px">
+                <el-row>
+                    <el-col :span="10">
+                        <img src="images/cet-main1.png" alt="cet-main1" style="vertical-align: center">
+                    </el-col>
+                    <el-col :span="14">
+                        <p style="font-size: 25px; padding: 0; margin: 15px 0">
+                            项目介绍
+                        </p>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p style="color: grey; line-height: 200%; font-size: 14px">
+                    全国大学英语四、六级考试(CET)系教育部主办、教育部教育考试院（原教育部考试中…
+                </p>
+                <el-link type="primary" style="float: right; margin-right: 10px">
+                    详细>>
+                </el-link>
+                <br>
+            </div>
+        </el-col>
+        <el-col :span="6">
+            <div style="border: 1px solid #ccc; padding: 20px">
+                <el-row>
+                    <el-col :span="10">
+                        <img src="images/cet-main2.png" alt="cet-main2" style="vertical-align: center">
+                    </el-col>
+                    <el-col :span="14">
+                        <p style="font-size: 25px; padding: 0; margin: 15px 0">
+                            CET笔试
+                        </p>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p style="color: grey; line-height: 200%; font-size: 14px">
+                    CET笔试每年开考两次，分别于6月和12月举行，具体考试时间我中心将会在每年年初…
+                </p>
+                <el-link type="primary" style="float: right; margin-right: 10px">
+                    详细>>
+                </el-link>
+                <br>
+            </div>
+        </el-col>
+        <el-col :span="6">
+            <div style="border: 1px solid #ccc; padding: 20px">
+                <el-row>
+                    <el-col :span="10">
+                        <img src="images/cet-main3.png" alt="cet-main3" style="vertical-align: center">
+                    </el-col>
+                    <el-col :span="14">
+                        <p style="font-size: 25px; padding: 0; margin: 15px 0">
+                            CET口试
+                        </p>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <p style="color: grey; line-height: 200%; font-size: 14px">
+                    CET口试每年开考两次，分别于5月和11月举行，具体考试时间我中心将会在每年年初…
+                </p>
+                <el-link type="primary" style="float: right; margin-right: 10px">
+                    详细>>
+                </el-link>
+                <br>
+            </div>
+        </el-col>
+        <el-col :span="6">
+            <div style="border: 1px solid #ccc; padding: 20px">
+                <el-row>
+                    <el-col :span="10">
+                        <img src="images/cet-main4.png" alt="cet-main4" style="vertical-align: center">
+                    </el-col>
+                    <el-col :span="14">
+                        <p style="font-size: 25px; padding: 0; margin: 15px 0">
+                            考生服务
+                        </p>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+                <el-row>
+                    <el-col :span="11" :offset="0">
+                        <el-button style="width: 100%; padding: 12px 0" @click="handleClick">
+                            在线报名
+                        </el-button>
+                    </el-col>
+                    <el-col :span="11" :offset="1">
+                        <el-button style="width: 100%; padding: 12px 0" @click="handleClick">
+                            成绩查询
+                        </el-button>
+                    </el-col>
+                </el-row>
+                <el-row style="margin-top: 1px">
+                    <el-col :span="11" :offset="0">
+                        <el-button style="width: 100%; padding: 12px 0" @click="handleClick">
+                            补办成绩证明
+                        </el-button>
+                    </el-col>
+                    <el-col :span="11" :offset="1">
+                        <el-button style="width: 100%; padding: 12px 0" @click="handleClick">
+                            考试系统培训
+                        </el-button>
+                    </el-col>
+                </el-row>
+                <el-row style="margin-top: 1px">
+                    <el-col :span="11" :offset="0">
+                        <el-button style="width: 100%; padding: 12px 0" @click="handleClick">
+                            成绩核查
+                        </el-button>
+                    </el-col>
+                    <el-col :span="11" :offset="1">
+                        <el-button style="width: 100%; padding: 12px 0" @click="handleClick">
+                            成绩证明
+                        </el-button>
+                    </el-col>
+                </el-row>
+            </div>
+        </el-col>
+    </el-row>
+
+    <el-row style="background-color: #F4F4F4; margin-top: 20px">
+        <el-col :span="2" :offset="2">
+            <img src="images/cet-foot.png" alt="cet-foot" style="vertical-align: center">
+        </el-col>
+        <el-col :span="16" :offset="0">
+            <p style="font-size: 10px; color: grey; padding: 8px">
+                主办单位：********<br>
+                京ICP备********号-*　　 京公网安备 **************号<br>
+                建议您使用IE11、Edge、Chrome、Firefox、360等主流浏览器浏览本网站<br>
+            </p>
+        </el-col>
+    </el-row>
+</div>
+</body>
+<style>
+    #app {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<script>
+    new Vue({
+        el: '#app',
+        mounted() {
+        },
+        data() {
+            return {
+                activeSelect: '1',
+            }
+        },
+        methods: {
+            handleClick() {
+                window.location.href = 'login.html'
+            }
+        }
+    })
+</script>
+</html>
